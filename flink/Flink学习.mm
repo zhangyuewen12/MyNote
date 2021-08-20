@@ -1,0 +1,1 @@
+{"objectClass":"NSDictionary","root":{"objectClass":"MindNode","ID":"B711D","rootPoint":{"objectClass":"CGPoint","x":360,"y":429},"lineColorHex":"#BBBBBB","children":{"0":{"objectClass":"MindNode","ID":"J4C0Q","lineColorHex":"#DC306C","text":""},"1":{"objectClass":"MindNode","ID":"3CX87","lineColorHex":"#BF58F5","text":""},"objectClass":"NSArray"},"text":"Flink学习"},"ID":"X9686"}
