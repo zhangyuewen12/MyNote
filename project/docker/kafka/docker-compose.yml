@@ -1,0 +1,40 @@
+version: '3.9'
+services:
+    kafka1:
+        build: .
+        image: kafka:v1
+        hostname: kafka1
+        networks:
+            - zk
+        ports:
+            - "19091:9092"
+        environment:
+            ZOOKEEPER_CONNECT: "zk-kafka_zoo1_1:2181,zk-kafka_zoo2_1:2181,zk-kafka_zoo3_1:2181"
+            BROKER_ID: 1
+
+    kafka2:
+        build: .
+        image: kafka:v1
+        hostname: kafka2
+        networks:
+            - zk
+        ports:
+            - "19092:9092"
+        environment:
+            ZOOKEEPER_CONNECT: "zk-kafka_zoo1_1:2181,zk-kafka_zoo2_1:2181,zk-kafka_zoo3_1:2181"
+            BROKER_ID: 2
+        
+    kafka3:
+        build: .
+        image: kafka:v1
+        hostname: kafka3
+        networks:
+            - zk
+        ports:
+            - "19093:9092"
+        environment:
+            ZOOKEEPER_CONNECT: "zk-kafka_zoo1_1:2181,zk-kafka_zoo2_1:2181,zk-kafka_zoo3_1:2181"
+            BROKER_ID: 3
+networks:
+  zk:
+    external: true
