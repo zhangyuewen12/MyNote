@@ -1,4 +1,4 @@
-# MySQL创建用户与授权
+MySQL创建用户与授权
 
 ## 一. 创建用户
 
@@ -138,3 +138,5 @@ REVOKE SELECT ON *.* FROM 'pig'@'%';
 ```sql
 DROP USER 'username'@'host';
 ```
+
+flush privileges
