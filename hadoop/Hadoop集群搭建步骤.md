@@ -135,3 +135,15 @@ export HDFS_SECONDARYNAMENODE_USER=root
 >
 > 如果不配置这写变量的话，直接使用 $HADOOP_HOME/sbin/start-dfs.sh命令会被拒绝执行
 
+
+
+## 四、启动
+
+```
+$HADOOP_HOME/sbin/start-dfs.sh
+$HADOOP_HOME/sbin/start-yarn.sh
+
+$HADOOP_HOME/sbin/stop-yarn.sh
+$HADOOP_HOME/sbin/stop-dfs.sh
+```
+
