@@ -305,7 +305,11 @@ env.fromElements(Tuple2.of(1L, 3L), Tuple2.of(1L, 5L), Tuple2.of(1L, 7L), Tuple2
 // the printed output will be (1,4) and (1,5)
 ```
 
-## State Backends
+## State Backends  状态存储 
+
+> When checkpointing is activated, such state is persisted upon checkpoints to guard against data loss and recover consistently. How the state is represented internally, and how and where it is persisted upon checkpoints depends on the chosen **State Backend**.
+>
+> 当激活checkpoint时，这种状态会在检查点上保存，以防止数据丢失并一致恢复。状态如何在内部表示，以及在检查点上如何以及在何处持久化取决于所选的状态后端。
 
 ### HashMapStateBackend
 
@@ -320,6 +324,8 @@ The HashMapStateBackend is encouraged for:
 
 The EmbeddedRocksDBStateBackend holds in-flight data in a [RocksDB](http://rocksdb.org/) database that is (per default) stored in the TaskManager local data directories. Unlike storing java objects in `HashMapStateBackend`, data is stored as serialized byte arrays, which are mainly defined by the type serializer, resulting in key comparisons being byte-wise instead of using Java’s `hashCode()` and `equals()` methods.
 
+> EmbeddedRockSDBStateBend将运行中的数据保存在RocksDB数据库中，该数据库（默认）存储在TaskManager本地数据目录中。与在HashMapStateBend中存储java对象不同，数据存储为序列化字节数组，主要由类型序列器定义，进而 key的比较是按字节进行的，而不是使用java的hashCode（）和equals（）方法。
+
 The EmbeddedRocksDBStateBackend always performs asynchronous snapshots.
 
 Limitations of the EmbeddedRocksDBStateBackend:
@@ -331,9 +337,24 @@ The EmbeddedRocksDBStateBackend is encouraged for:
 - Jobs with very large state, long windows, large key/value states.
 - All high-availability setups.
 
+
+
+## Checkpoint Storage (检查点存储)
+
+When checkpointing is enabled, managed state is persisted to ensure consistent recovery in case of failures. Where the state is persisted during checkpointing depends on the chosen **Checkpoint Storage**.
+
+## Available Checkpoint Storage Options [#](https://nightlies.apache.org/flink/flink-docs-release-1.13/docs/ops/state/checkpoints/#available-checkpoint-storage-options)
+
+Out of the box, Flink bundles these checkpoint storage types:
+
+- *JobManagerCheckpointStorage*
+- *FileSystemCheckpointStorage*
+
+
+
 ### State 存储新旧版本的区别
 
-> Beginning in **Flink 1.13**, the community reworked its public state backend classes to help users better understand the separation of local state storage and checkpoint storage. This change does not affect the runtime implementation or characteristics of Flink’s state backend or checkpointing process; it is simply to communicate intent better. Users can migrate existing applications to use the new API without losing any state or consistency.
+> Beginning in **Flink 1.13**, the community reworked its public state backend classes to help users better understand the separation of **local state storage and checkpoint storage.** This change does not affect the runtime implementation or characteristics of Flink’s state backend or checkpointing process; it is simply to communicate intent better. Users can migrate existing applications to use the new API without losing any state or consistency.
 >
 > 从Flink1.13后，社区重构了state backend 类去帮助用户更好的理解本地状态存储和checkpoint存储的区别。这种改变并不影响实际的运行时实现。只是为了用户更好的理解。
 
@@ -383,3 +404,4 @@ state.checkpoints.dir: file:///checkpoint-dir/
 state.checkpoint-storage: filesystem
 ```
 
+- 
