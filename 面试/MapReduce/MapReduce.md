@@ -43,7 +43,7 @@ MapReduce运行时，首先通过Map读取HDFS中的数据，然后经过拆分�
 
 ## shuffle
 
-  mapreduce确保每个reduce的输入都是按照键值排序的，系统执行排序，将map的输入作为reduce的输入过程称之为shuffle过程。shuffle也是我们优化的重点部分。shuffle流程图如下图所示
+mapreduce确保每个reduce的输入都是按照键值排序的，系统执行排序，将map的输入作为reduce的输入过程称之为shuffle过程。shuffle也是我们优化的重点部分。shuffle流程图如下图所示
 
 ![image-20211014131826663](/Users/zyw/Library/Application Support/typora-user-images/image-20211014131826663.png)
 
