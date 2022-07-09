@@ -52,7 +52,7 @@ mysql> flush privileges;
 ```xml
 <property>
 <name>javax.jdo.option.ConnectionURL</name>
-<value>jdbc:mysql://localhost:3306/metastore</value>
+<value>jdbc:mysql://localhost:3306/hive_metastore?createDatabaseIfNotExist=true</value>
 </property>
 <property>
 <name>javax.jdo.option.ConnectionDriverName</name>
@@ -74,13 +74,31 @@ mysql> flush privileges;
 
 ```shell
 ${HIVE_HOME}/bin目录下
+
+1.$HIVE_HOME/bin/schematool -dbType <db type> -initSchema
 schematool -initSchema -dbType mysql
+OR
+schematool -initSchema -dbType derby
+
+2.启动hiveserver2
+
+   启动元数据服务
+2.1. hive --service metastore &
+2.2. $HIVE_HOME/bin/hiveserver2 &
+
+3.启动beeine
+ 3.1  beeline 
+   3.2 !connect jdbc:hive2://localhost:10000
 ```
 
+> [HiveServer2](https://cwiki.apache.org/confluence/display/Hive/HiveServer2+Overview) (HS2) is a server interface that enables remote clients to execute queries against Hive and retrieve the results (a more detailed intro [here](https://cwiki.apache.org/confluence/display/Hive/HiveServer2+Overview)). The current implementation, based on Thrift RPC, is an improved version of [HiveServer](https://cwiki.apache.org/confluence/display/Hive/HiveServer) and supports multi-client concurrency and authentication. It is designed to provide better support for open API clients like JDBC and ODBC.
+>
+> 
+>
 > Starting from Hive 2.1, we need to run the schematool command below as an initialization step. For example, we can use "derby" as db type. 
 >
 > ```
->   $ $HIVE_HOME/bin/schematool -dbType <db type> -initSchema
+> $HIVE_HOME/bin/schematool -dbType <db type> -initSchema
 > ```
 
 

@@ -4,13 +4,14 @@
 
 ```
 将文件test分包压缩成10M 的文件：
-tar czf - test | split -b 10m - test.tar.gz
+cat flink.tar |split -b 15m - flink.tar
 ```
 
 解压
 
 ```
 将第一步分拆的多个包解压：
-cat test.tar.gz* | tar -xzv
+cat test.tar.gz* > test.tar
+
 ```
 
