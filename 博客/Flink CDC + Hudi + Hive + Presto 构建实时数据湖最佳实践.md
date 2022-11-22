@@ -56,6 +56,8 @@ create table users_cdc(
    ts timestamp default CURRENT_TIMESTAMP not null
 );
 
+
+
 insert into users_cdc(name) values("zhangsan");
 ```
 
@@ -66,6 +68,7 @@ insert into users_cdc(name) values("zhangsan");
 ```sql
 $FLINK_HOME/bin/sql-client.sh embedded -j ./lib/hudi-flink-bundle_2.11-0.10.0.jar shell
 
+drop table if exists mysql_users;
 CREATE TABLE mysql_users (
     id BIGINT,
     name String,
@@ -81,7 +84,7 @@ CREATE TABLE mysql_users (
 'server-time-zone'= 'Asia/Shanghai',
 'debezium.snapshot.mode'='initial',
 'database-name'= 'test',
-'table-name'= 'users_cdc'
+'table-name'= 'users'
 );
 
 Flink SQL> select * from mysql_users;
@@ -146,6 +149,8 @@ Flink SQL> select * from mysqlcdc_sync_hive01;
 
 
 
+创建hudi sink表
+
 ```sql
 CREATE TABLE mysqlcdc_sync_hive01(
 id bigint ,
@@ -158,9 +163,12 @@ primary key(id) not enforced --必须指定uuid 主键
 PARTITIONED BY (`partition`)
 with(
 'connector'='hudi',
-'path'= 'hdfs://localhost:9000/user/hive/warehouse/odl.db/mysqlcdc_sync_hive01', 'hoodie.datasource.write.recordkey.field'= 'id', 
-'read.streaming.enabled' = 'true',
+'path'= 'hdfs://localhost:9000/user/hive/warehouse/odl.db/mysqlcdc_sync_hive01',
 'table.type'= 'MERGE_ON_READ',
+'read.streaming.check-interval' = '2' ,
+'read.streaming.enabled' = 'true',
+'changelog.enabled' = 'true',
+'read.streaming.skip_compaction' = 'true',
 'hive_sync.support_timestamp'= 'true'
 );
 ```
