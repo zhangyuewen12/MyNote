@@ -21,6 +21,15 @@
 (1)辅助NameNode，分担其工作量，比如定期合并Fsimage和Edits，并推送给NameNode ; (2)在紧急情况下，可辅助恢复NameNode。
 ```
 
+```
+架构原理
+HDFS采用master/slave架构。一个HDFS集群包含一个单独的NameNode和多个DataNode。
+
+NameNode作为master服务，它负责管理文件系统的命名空间和客户端对文件的访问。NameNode会保存文件系统的具体信息，包括文件信息、文件被分割成具体block块的信息、以及每一个block块归属的DataNode的信息。对于整个集群来说，HDFS通过NameNode对用户提供了一个单一的命名空间。
+
+DataNode作为slave服务，在集群中可以存在多个。通常每一个DataNode都对应于一个物理节点。DataNode负责管理节点上它们拥有的存储，它将存储划分为多个block块，管理block块信息，同时周期性的将其所有的block块信息发送给NameNode。
+```
+
 
 
 ## 问题2. HDFS的写数据流程

@@ -1,0 +1,7 @@
+LinkedBlockingQueue是Java中的一个线程安全的队列实现，它实现了BlockingQueue接口，底层使用链表来存储元素。LinkedBlockingQueue的特点在于它的容量是可选的，如果不指定容量，则默认容量为Integer.MAX_VALUE，即无界队列。
+
+LinkedBlockingQueue支持两种类型的操作：添加和移除。它的添加操作可以在队列已满时阻塞等待，直到队列有空间可用；移除操作可以在队列为空时阻塞等待，直到队列中有元素可用。这种阻塞的特性使得LinkedBlockingQueue非常适合用于实现生产者-消费者模式。
+
+与ArrayBlockingQueue相比，LinkedBlockingQueue的主要优点在于它不需要指定固定的容量，在某些场景下更加灵活。但是，它在高并发场景下可能会有性能损耗，因为它的实现使用了更多的同步操作。
+
+总的来说，LinkedBlockingQueue是一个常用的队列实现，特别适用于需要在多线程环境下安全地进行数据交换的情况。
